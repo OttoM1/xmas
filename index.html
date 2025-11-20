@@ -6,7 +6,7 @@
 <head>
     <meta theme-color="white">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -25,19 +25,21 @@
             --bg: #e2dbcd;
             --card: #e2dbcd;
             --accent: #ff3b69;
-            --muted: #98a0b3;
+            --muted: #252627;
             --glass: rgba(255, 255, 255, 0.04);
-            --gold: #f2d76b;
-        }
+            --gold: #f0cf4a;
+
+
+  }
 
         * {
-            box-sizing: border-box
+            box-sizing: border-box;
         }
 
         html,
         body {
             width: 100vw;
-            height: 100%
+            height: 100%;
         }
 
 ::-webkit-scrollbar {
@@ -46,19 +48,20 @@
 }
 
         body {
-                    background-color: rgb(255, 255, 255);
-
+            background-color: white;
             margin: 0;
-            padding: 32px;
+            padding: 28px;
             overflow-x: hidden;
             font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial;
-            color: rgb(0, 0, 0);
+            color: rgb(255, 255, 255);
             background: rgb(255, 255, 255);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
         header {
+            
+            
             display: flex;
             flex-direction: column;
             gap: 32px;
@@ -66,10 +69,28 @@
             margin-bottom: 40px;
         }
 
-        header h1 {
-            font-size: 8vw;
-            margin: 0
-        }
+        
+            
+           header h1 {
+    font-family: "Anton", sans-serif;
+    font-size: 12vw;
+    margin: 0;
+
+    /* the image you want inside the letters (use the same image URL as your page background if desired) */
+    background-image: url(h1.jpg);
+    background-size: cover;
+    background-position: center;
+    display: inline-block;              /* required so background aligns with text */
+    -webkit-background-clip: text;      /* clip background into glyphs */
+    background-clip: text;
+    letter-spacing: 0.8vw;
+    -webkit-text-fill-color: transparent; /* hide fill so clipped bg shows */
+    color: transparent;
+    /* optional: a soft stroke to help readability */
+    text-shadow: 0 1px 2px rgba(128, 126, 126, 0.111);
+    filter: drop-shadow(0 0 4px rgb(0, 0, 0));
+  }
+        
 
         header p {
             margin: 0;
@@ -113,7 +134,12 @@
         }
 
         .slot {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+          
+
+            background: linear-gradient(128deg, white 0%, white 10%, rgba(255, 0, 0, 0.2) 15%, white 20%, white 25%, rgba(255, 0, 0, 0.2)  30%, white 35%, white 40%, rgba(255, 0, 0, 0.2)  45%, white 50%, white 55%, rgba(255, 0, 0, 0.2)  60%, white 65%, white 70%, rgba(255, 0, 0, 0.2)  75%, white 80%, white 85%, rgba(255, 0, 0, 0.2)  90%, white 95%, white 100%);
+filter: contrast(0.9);
+
+border: 3px solid rgb(255, 33, 99);         
             border-radius: 14px;
             padding: 16px;
             position: relative;
@@ -126,20 +152,19 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            box-shadow: 0 6px 18px rgba(255, 36, 76, 0.983);
+            box-shadow: 0 2px 16px rgb(5, 75, 25);
             transition: transform .18s ease, box-shadow .18s ease;
+
+            
         }
 
-        .slot:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(2, 6, 23, 0.8)
-        }
 
         .number {
-            font-size: 28px;
+            font-size: 32px !important;
             font-weight: 700;
             color: var(--gold);
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6)
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.846);
+
         }
 
         .label {
@@ -152,13 +177,15 @@
             position: absolute;
             inset: 0;
             border-radius: 14px;
-            background: linear-gradient(180deg, rgba(2, 6, 23, 0.6), rgba(2, 6, 23, 0.7));
+
           display: flex;
             align-items: center;
+           z-index: 1000 !important;
             justify-content: center;
             flex-direction: column;
             gap: 8px
         }
+
 
         .padlock {
             font-size: 22px;
@@ -173,7 +200,8 @@
             position: absolute;
             top: 12px;
             right: 12px;
-            background: rgba(72, 255, 0, 0.173);
+            color: #252627;
+            background: rgba(13, 255, 110, 0.685);
             padding: 6px 10px;
             border-radius: 10px;
             font-size: 12px
@@ -194,12 +222,13 @@
 
         /* opened card info */
         .modal {
-            background: #e0eff1;
             border-radius: 14px;
             padding: 22px;
+                        border: 2px solid rgb(255, 25, 90);
+
             max-width: 720px;
             width: 100%;
-            box-shadow: 0 14px 40px rgba(2, 6, 23, 0.9);
+            box-shadow: 0 12px 32px rgba(255, 18, 85, 0.898);
               min-height: 120px;
             width: 86vw;
             align-self: center;
@@ -225,14 +254,14 @@
         }
 
         .close {
-            margin-left: auto
+            margin-left: auto;
         }
 
         footer {
             max-width: 1024px;
             padding-bottom: 4svh;
             text-align: center;
-            color: var(--muted);
+            color: var(--gold);
             font-size: 14px;
         }
 
@@ -246,24 +275,31 @@
                 font-size: 22px
             }
         }
+
+
     </style>
 </head>
 
 <body>
+
+
+
     <header>
         <div>
-            <h1>Joulukalenteri🎁</h1>
+            <h1>Joulukalenteri</h1>
             <p id="subtitle">Mari</p>
         </div>
+        
         <div class="controls">
-            <div id="nextTimer" class="small">Seuraava luukku : —</div>
-            <button id="openAllBtn" class="btn">Open all (dev)</button>
-            <button id="resetBtn" class="btn">Reset seen</button>
+           <div style="visibility: hidden;" id="nextTimer" class="small">Seuraava luukku : —</div> 
+            <button style="visibility: hidden;" id="openAllBtn" class="btn">Open all (dev)</button>
+            <button style="visibility: hidden;" id="resetBtn" class="btn">Reset seen</button>
         </div>
+    
     </header>
 
     <main>
-        <section class="grid" id="calendarGrid" aria-live="polite" aria-label="Christmas calendar">
+        <section class="grid" id="calendarGrid" aria-live="polite" aria-label="Christmas calendar" >
             <!-- slots injected by JS -->
         </section>
     </main>
@@ -280,19 +316,19 @@
     </div>
 
     <footer>
-        Tip: open this file locally in your browser. For testing you can add <code>?simulate=YYYY-MM-DD</code> to the
-        URL (e.g. <code>?simulate=2024-12-05</code>) or <code>?openAll=1</code> to unlock all days for development.
-    </footer>
+        Kalenterin lahjat saat 24.12 jälkeen.
+       </footer>
 
     <script>
         // CONFIG
+        /*
         const TOTAL_DAYS = 24; 
         const YEAR = (new Date()).getFullYear();   const SURPRISES = {
             1: { title: 'A note', html: '<strong>Love note:</strong><p>Today I thought about how lucky I am to have you.</p>' },
             2: { title: 'Playlist', html: '<p>Here is a special playlist I made for you: <a href="#">Open playlist</a></p>' },
             3: { title: 'Coupon', html: '<p>Coupon: One breakfast in bed — valid anytime.</p>' },
             4: { title: 'Photo', html: '<p>A throwback photo of us.</p><img src="https://via.placeholder.com/600x200?text=Photo+%231" alt="photo" style="max-width:100%;border-radius:8px;margin-top:8px">' },
-            5: { title: 'Recipe', html: '<p>A recipe card for your favourite dish — I will cook this for you.</p>' },
+            5: { title: 'Recipe', html: '<p><img src="ugg.jpg" alt="img" style="width:216px;border-radius:8px; margin-top: -40px;"></p>' },
             6: { title: 'Puzzle', html: '<p>Solve this riddle to get a small surprise: <em>What has keys but can\'t open locks?</em></p><p><strong>Answer:</strong> A piano.</p>' },
             7: { title: 'Video', html: '<p>A short video message (attach your own via a URL)</p>' },
             8: { title: 'Massage', html: '<p>Coupon: 30 min back massage — redeemable this week.</p>' },
@@ -311,13 +347,16 @@
             21: { title: 'Warm socket', html: '<p>One evening cuddles coupon — redeemable anytime.</p>' },
             22: { title: 'Countdown', html: '<p>Only 2 days left! Here is a mini clue about the big gift.</p>' },
             23: { title: 'Surprise eve', html: '<p>Tomorrow is the big present. Get excited!</p>' },
-            24: { title: 'Big surprise 🎁', html: '<p>Open me on Christmas morning — big love and a physical gift.</p>' }
+            24: { title: 'Big surprise 🎁', html: '<a href="https://stock.adobe.com/fi/search?k=%22punta+cana%22">7-10 yön loma 2026, AIC-hotelli</a> ' }
         };
 
-        function getQueryParams() {
-            const q = {}; location.search.slice(1).split('&').forEach(s => { if (!s) return; const [k, v] = s.split('='); q[decodeURIComponent(k)] = v ? decodeURIComponent(v) : '' }); return q;
-        }
+    function getQueryParams() {
+        const q = {}; location.search.slice(1).split('&').forEach(s => { if (!s) return; const [k, v] = s.split('='); q[decodeURIComponent(k)] = v ? decodeURIComponent(v) : '' }); return q;
+    }
 
+      
+
+        
         function getToday(simulate) {
             if (simulate) {
                 // parse YYYY-MM-DD
@@ -364,7 +403,7 @@
 
                 if (!unlocked) {
                     const overlay = document.createElement('div'); overlay.className = 'locked-overlay';
-                    overlay.innerHTML = `<div class="padlock">🔒</div><div class="small" style="margin-top: 40px;">Avattavissa ${slotDate.toLocaleDateString()}</div>`;
+                    overlay.innerHTML = `<div class="padlock">🔒</div><div class="small" style="margin-top: 60px;">Avattavissa ${slotDate.toLocaleDateString()}</div>`;
                     el.appendChild(overlay);
                 }
 
@@ -392,12 +431,12 @@
         function openDay(day) {
             const data = SURPRISES[day] || { title: 'Surprise', html: '<p>Replace this with your content.</p>' };
             modalTitle.textContent = `Day ${day} — ${data.title || ''}`;
-            modalSubtitle.textContent = `Opened on ${new Date().toLocaleString()}`;
+            modalSubtitle.textContent = `Avattu: ${new Date().toLocaleString()}`;
             modalContent.innerHTML = data.html || '';
             modalBackdrop.style.display = 'flex';
             markSeen(day);
             const el = grid.querySelector(`[data-day='${day}']`);
-            if (el) el.querySelector('.open-state').textContent = 'Seen';
+            if (el) el.querySelector('.open-state').textContent = 'Nähty';
         }
 
         function closeModal() {
@@ -445,7 +484,7 @@
                 if (diff <= 0) { render(); return; }
                 const s = Math.floor(diff / 1000) % 60; const m = Math.floor(diff / 60000) % 60; const h = Math.floor(diff / 3600000) % 24; const d = Math.floor(diff / 86400000);
                 const pieces = [];
-                if (d > 0) pieces.push(d + 'd');
+                if (d > 0) pieces.push(d + 'p');
                 pieces.push(String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'));
                 nextTimerEl.textContent = 'Seuraava luukku ' + pieces.join(' ');
             }
@@ -460,8 +499,253 @@
         }, 60 * 1000);
 
         window._calendar = { render, openDay, SURPRISES };
+*/
+   const TOTAL_DAYS = 24; // how many slots
+    const YEAR = (new Date()).getFullYear(); // target year for the calendar (you can override via simulate param)
 
-    </script>
+    const SURPRISES = {
+        1: { title: 'A note', html: '<strong>Love note:</strong><p>Today I thought about how lucky I am to have you.</p>' },
+        2: { title: 'Playlist', html: '<p>Here is a special playlist I made for you: <a href="#">Open playlist</a></p>' },
+        3: { title: 'Coupon', html: '<p>Coupon: One breakfast in bed — valid anytime.</p>' },
+        4: { title: 'Photo', html: '<p>A throwback photo of us.</p><img src="https://via.placeholder.com/600x200?text=Photo+%231" alt="photo" style="max-width:100%;border-radius:8px;margin-top:8px">' },
+        5: { title: 'Recipe', html: '<p><img src="ugg.jpg" alt="img" style="width:216px;border-radius:8px; margin-top: -40px;"></p>' },
+        6: { title: 'Puzzle', html: '<p>Solve this riddle to get a small surprise: <em>What has keys but can\'t open locks?</em></p><p><strong>Answer:</strong> A piano.</p>' },
+        7: { title: 'Video', html: '<p>A short video message (attach your own via a URL)</p>' },
+        8: { title: 'Massage', html: '<p>Coupon: 30 min back massage — redeemable this week.</p>' },
+        9: { title: 'Game', html: '<p>A tiny JS mini-game lives here. (You can paste a link or embed)</p>' },
+        10: { title: 'Ticket', html: '<p>A surprise plan: Movie night — tickets for <em>you + me</em>.</p>' },
+        11: { title: 'Poem', html: '<p>A short poem written for you.</p>' },
+        12: { title: 'Scavenger', html: '<p>A clue for a small physical gift hidden at home: Look where we keep the <strong>mugs</strong>.</p>' },
+        13: { title: 'GIF', html: '<p><img src="https://media.giphy.com/media/3o7aCRpR1h2j9rVns8/giphy.gif" alt="gif" style="max-width:100%;border-radius:8px"></p>' },
+        14: { title: 'Letter', html: '<p>I wrote you a letter — open it and read slowly.</p>' },
+        15: { title: 'Dessert', html: '<p>Coupon: I will bake your favourite dessert this weekend.</p>' },
+        16: { title: 'Memory', html: '<p>Remember this? (add a small memory or photo)</p>' },
+        17: { title: 'Workout', html: '<p>Coupon: A short workout / walk together — my treat.</p>' },
+        18: { title: 'Custom', html: '<p>Customize a small digital gift: a drawing, a playlist, or a voice note.</p>' },
+        19: { title: 'Surprise call', html: '<p>I will call and sing you something silly. 😉</p>' },
+        20: { title: 'Gift card', html: '<p>Link to a small e-gift card or coupon (add URL)</p>' },
+        21: { title: 'Warm socket', html: '<p>One evening cuddles coupon — redeemable anytime.</p>' },
+        22: { title: 'Countdown', html: '<p>Only 2 days left! Here is a mini clue about the big gift.</p>' },
+        23: { title: 'Surprise eve', html: '<p>Tomorrow is the big present. Get excited!</p>' },
+        24: { title: 'Big surprise 🎁', html: '<a href="https://stock.adobe.com/fi/search?k=%22punta+cana%22">7-10 yön loma 2026, AIC-hotelli</a> ' }
+    };
+
+    function getQueryParams() {
+            const q = {}; location.search.slice(1).split('&').forEach(s => { if (!s) return; const [k, v] = s.split('='); q[decodeURIComponent(k)] = v ? decodeURIComponent(v) : '' }); return q;
+        }
+
+        // Calculate which days are unlocked using local time (or a simulated date via ?simulate=YYYY-MM-DD)
+        function getToday(simulate) {
+            if (simulate) {
+                // parse YYYY-MM-DD
+                const parts = simulate.split('-').map(x => parseInt(x, 10));
+                if (parts.length === 3) return new Date(parts[0], parts[1] - 1, parts[2]);
+            }
+            return new Date();
+        }
+        function formatCountdown(ms) {
+                if (ms <= 0) return 'Unlocked';
+                const s = Math.floor(ms / 1000) % 60;
+                const m = Math.floor(ms / 60000) % 60;
+                const h = Math.floor(ms / 3600000) % 24;
+                const d = Math.floor(ms / 86400000);
+                const hh = String(h).padStart(2, '0');
+                const mm = String(m).padStart(2, '0');
+                const ss = String(s).padStart(2, '0');
+                return (d > 0 ? d + 'd ' : '') + hh + ':' + mm + ':' + ss;
+            }
+
+            const grid = document.getElementById('calendarGrid');
+            const params = getQueryParams();
+            const simulate = params.simulate || null; // e.g. ?simulate=2024-12-05
+            const openAllMode = params.openAll === '1';
+
+            // store references to countdown spans so we can update them per second without re-rendering DOM fully
+            const countdownSpans = new Map();
+
+            function render() {
+                grid.innerHTML = '';
+                countdownSpans.clear();
+                const now = getToday(simulate);
+                const year = now.getFullYear();
+                // we assume December calendar — adjust if you want to change month
+                for (let i = 1; i <= TOTAL_DAYS; i++) {
+                    const slotDate = new Date(year, 11, i, 0, 0, 0, 0);
+                    const unlockTs = slotDate.getTime();
+                    const unlocked = openAllMode || (getToday(simulate).getTime() >= unlockTs);
+                    const seen = isSeen(i);
+
+                    const el = document.createElement('article');
+                    el.className = 'slot';
+                    el.setAttribute('data-day', i);
+                    el.setAttribute('tabindex', '0');
+
+                    el.innerHTML = `
+<div class="number">${i}</div>
+
+<div class="open-state">${seen ? 'Avattu' : ''}</div>
+`;
+/*
+<div class="label">${unlocked ? 'Open me' : 'Locked'}</div>
+
+*/
+
+                    if (!unlocked) {
+                        const overlay = document.createElement('div'); overlay.className = 'locked-overlay';
+                        const countdown = document.createElement('div');
+                        countdown.className = 'small';
+                        countdown.setAttribute('data-unlock-ts', unlockTs);
+                        countdown.textContent = formatCountdown(unlockTs - getToday(simulate).getTime());
+                        // keep reference
+                        countdownSpans.set(i, countdown);
+
+                        overlay.appendChild(document.createElement('div'));
+                        overlay.querySelector('div').className = 'padlock';
+                        overlay.querySelector('div').textContent = '🔒';
+
+                        const info = document.createElement('div'); info.className = 'small';
+                        info.style.marginTop = '40px';
+                        info.textContent = 'Aukeaa';
+
+                        overlay.appendChild(info);
+                        overlay.appendChild(countdown);
+                        el.appendChild(overlay);
+                    }
+
+                    el.addEventListener('click', () => {
+                        const nowTs = getToday(simulate).getTime();
+                        if (unlocked) openDay(i);
+                        else flashLocked(el);
+                    });
+                    el.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); el.click(); } });
+
+                    grid.appendChild(el);
+                }
+                updateNextTimer();
+            }
+            function flashLocked(el) {
+                    el.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-6px)' }, { transform: 'translateY(0)' }], { duration: 300 });
+                }
+
+                // Modal
+                const modalBackdrop = document.getElementById('modalBackdrop');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalSubtitle = document.getElementById('modalSubtitle');
+                const modalContent = document.getElementById('modalContent');
+                const closeModalBtn = document.getElementById('closeModal');
+
+                function openDay(day) {
+                    const data = SURPRISES[day] || { title: 'Surprise', html: '<p>Replace this with your content.</p>' };
+                    modalTitle.textContent = `Day ${day} — ${data.title || ''}`;
+                    modalSubtitle.textContent = `Avattu: ${new Date().toLocaleString()}`;
+                    modalContent.innerHTML = data.html || '';
+                    modalBackdrop.style.display = 'flex';
+                    markSeen(day);
+                    // update open-state label
+                    const el = grid.querySelector(`[data-day='${day}']`);
+                    if (el) el.querySelector('.open-state').textContent = 'Nähty';
+                }
+
+                function closeModal() {
+                    modalBackdrop.style.display = 'none';
+                }
+
+                closeModalBtn.addEventListener('click', closeModal);
+                modalBackdrop.addEventListener('click', function (e) { if (e.target === modalBackdrop) closeModal(); });
+
+                // localStorage for seen flags
+                const LS_KEY = 'xmas_calendar_seen_' + YEAR;
+                function getSeen() {
+                    try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch (e) { return {} }
+                }
+                function markSeen(day) { const s = getSeen(); s[day] = true; localStorage.setItem(LS_KEY, JSON.stringify(s)); }
+                function isSeen(day) { const s = getSeen(); return !!s[day]; }
+                function resetSeen() { localStorage.removeItem(LS_KEY); render(); }
+
+                // openAll dev button
+                document.getElementById('openAllBtn').addEventListener('click', () => { location.search = '?openAll=1'; });
+                document.getElementById('resetBtn').addEventListener('click', () => { if (confirm('Reset seen flags?')) { resetSeen(); } });
+
+                // Next unlock countdown (keeps previous behaviour)
+                const nextTimerEl = document.getElementById('nextTimer');
+                let countdownInterval = null;
+                function getNextUnlockDate(now) {
+                        const year = now.getFullYear();
+                        const dec1 = new Date(year, 11, 1, 0, 0, 0, 0);
+                        if (now < dec1) return dec1;
+                        for (let i = 1; i <= TOTAL_DAYS; i++) {
+                            const d = new Date(year, 11, i, 0, 0, 0, 0);
+                            if (d.getTime() > now.getTime()) return d;
+                        }
+                        return null; // all unlocked
+                    }
+
+                    function updateNextTimer() {
+                        if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+                        const now = getToday(simulate);
+                        if (openAllMode) { nextTimerEl.textContent = 'All unlocked (dev)'; return; }
+                        const next = getNextUnlockDate(now);
+                        if (!next) { nextTimerEl.textContent = 'All days unlocked'; return; }
+
+                        function tick() {
+                            const nowLocal = getToday(simulate);
+                            const diff = Math.max(0, next - nowLocal);
+                            if (diff <= 0) { render(); return; }
+                            const s = Math.floor(diff / 1000) % 60; const m = Math.floor(diff / 60000) % 60; const h = Math.floor(diff / 3600000) % 24; const d = Math.floor(diff / 86400000);
+                            const pieces = [];
+                            if (d > 0) pieces.push(d + 'd');
+                            pieces.push(String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'));
+/*
+                            nextTimerEl.textContent = 'Next unlock in ' + pieces.join(' ');
+
+*/
+                        }
+                        tick();
+                        countdownInterval = setInterval(tick, 1000);
+                    }
+
+                    // per-second updater for each slot's countdown text (no full re-render)
+                    let perSecondTicker = null;
+                    function startPerSecondCountdown() {
+                        if (perSecondTicker) clearInterval(perSecondTicker);
+                        perSecondTicker = setInterval(() => {
+                            const nowTs = getToday(simulate).getTime();
+                            // update each countdown span
+                            let anyChanged = false;
+                            for (const [day, span] of countdownSpans.entries()) {
+                                const unlockTs = parseInt(span.getAttribute('data-unlock-ts'), 10);
+                                const remaining = unlockTs - nowTs;
+                                const text = formatCountdown(remaining);
+                                if (span.textContent !== text) { span.textContent = text; anyChanged = true; }
+                                if (remaining <= 0) {
+                                    // if this slot just unlocked, re-render to remove overlay and wire open ability
+                                    // mark a flag to re-render after loop to avoid DOM mutation during iteration
+                                    anyChanged = true;
+                                }
+                            }
+                            if (anyChanged) { render(); }
+                        }, 1000);
+                    }
+
+                    // initial render
+                    render();
+                    startPerSecondCountdown();
+
+                    // Autosync: when the real clock passes midnight, re-render (safety)
+                    setInterval(() => { render(); }, 60 * 1000);
+
+                    // Expose a couple functions for quick hacks in console
+                    window._calendar = { render, openDay, SURPRISES };
+
+</script>
+
+
+
+
+
+
+
+
 </body>
 
 </html>
