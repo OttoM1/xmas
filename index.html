@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Advent / Christmas Calendar — Surprise Web Gift</title>
+    <style>
+        :root {
+            --bg: #0b1020;
+            --card: #0f1724;
+            --accent: #ff6b6b;
+            --muted: #98a0b3;
+            --glass: rgba(255, 255, 255, 0.04);
+            --gold: #f2d76b;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            padding: 32px;
+            font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial;
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(255, 107, 107, 0.06), transparent), linear-gradient(180deg, #071022, #071028 50%);
+            color: white;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 22px
+        }
+
+        header h1 {
+            font-size: 20px;
+            margin: 0
+        }
+
+        header p {
+            margin: 0;
+            color: var(--muted)
+        }
+
+        .controls {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .btn {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 8px 12px;
+            border-radius: 10px;
+            color: var(--muted);
+            cursor: pointer
+        }
+
+        .btn.primary {
+            background: linear-gradient(180deg, var(--accent), #e84f4f);
+            color: white;
+            border: none
+        }
+
+        .grid {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            max-width: 1024px;
+            margin: 0 auto
+        }
+
+        .slot {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 14px;
+            padding: 16px;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+
+        .slot:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(2, 6, 23, 0.8)
+        }
+
+        .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6)
+        }
+
+        .label {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 6px
+        }
+
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.6), rgba(2, 6, 23, 0.7));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .padlock {
+            font-size: 22px
+        }
+
+        .small {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .open-state {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-size: 12px
+        }
+
+        /* modal */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.6), rgba(2, 6, 23, 0.8));
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px
+        }
+
+        .modal {
+            background: linear-gradient(180deg, #0b1220, #071021);
+            border-radius: 14px;
+            padding: 22px;
+            max-width: 720px;
+            width: 100%;
+            box-shadow: 0 14px 40px rgba(2, 6, 23, 0.9)
+        }
+
+        .modal h2 {
+            margin: 0 0 8px 0
+        }
+
+        .modal p {
+            margin: 0 0 12px 0;
+            color: var(--muted)
+        }
+
+        .modal .content {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 12px;
+            border-radius: 10px
+        }
+
+        .close {
+            margin-left: auto
+        }
+
+        footer {
+            max-width: 1024px;
+            margin: 18px auto 0;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        @media (max-width:520px) {
+            .slot {
+                min-height: 100px;
+                padding: 12px
+            }
+
+            .number {
+                font-size: 22px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>Christmas Calendar — for your crush / gf 🎁</h1>
+            <p id="subtitle">One new surprise per day. Built with HTML/CSS/JS.</p>
+        </div>
+        <div class="controls">
+            <div id="nextTimer" class="small">Next unlock: —</div>
+            <button id="openAllBtn" class="btn">Open all (dev)</button>
+            <button id="resetBtn" class="btn">Reset seen</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="grid" id="calendarGrid" aria-live="polite" aria-label="Christmas calendar">
+            <!-- slots injected by JS -->
+        </section>
+    </main>
+
+    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
+        <div class="modal" id="modal">
+            <div style="display:flex;align-items:center;gap:12px">
+                <h2 id="modalTitle">Day #</h2>
+                <button class="btn close" id="closeModal">Close</button>
+            </div>
+            <p id="modalSubtitle">—</p>
+            <div class="content" id="modalContent">Loading…</div>
+        </div>
+    </div>
+
+    <footer>
+        Tip: open this file locally in your browser. For testing you can add <code>?simulate=YYYY-MM-DD</code> to the
+        URL (e.g. <code>?simulate=2024-12-05</code>) or <code>?openAll=1</code> to unlock all days for development.
+    </footer>
+
+    <script>
+        // CONFIG
+        const TOTAL_DAYS = 24; // how many slots
+        const YEAR = (new Date()).getFullYear(); // target year for the calendar (you can override via simulate param)
+
+        // Example surprise content per day. Replace strings with HTML strings or objects as needed.
+        const SURPRISES = {
+            1: { title: 'A note', html: '<strong>Love note:</strong><p>Today I thought about how lucky I am to have you.</p>' },
+            2: { title: 'Playlist', html: '<p>Here is a special playlist I made for you: <a href="#">Open playlist</a></p>' },
+            3: { title: 'Coupon', html: '<p>Coupon: One breakfast in bed — valid anytime.</p>' },
+            4: { title: 'Photo', html: '<p>A throwback photo of us.</p><img src="https://via.placeholder.com/600x200?text=Photo+%231" alt="photo" style="max-width:100%;border-radius:8px;margin-top:8px">' },
+            5: { title: 'Recipe', html: '<p>A recipe card for your favourite dish — I will cook this for you.</p>' },
+            6: { title: 'Puzzle', html: '<p>Solve this riddle to get a small surprise: <em>What has keys but can\'t open locks?</em></p><p><strong>Answer:</strong> A piano.</p>' },
+            7: { title: 'Video', html: '<p>A short video message (attach your own via a URL)</p>' },
+            8: { title: 'Massage', html: '<p>Coupon: 30 min back massage — redeemable this week.</p>' },
+            9: { title: 'Game', html: '<p>A tiny JS mini-game lives here. (You can paste a link or embed)</p>' },
+            10: { title: 'Ticket', html: '<p>A surprise plan: Movie night — tickets for <em>you + me</em>.</p>' },
+            11: { title: 'Poem', html: '<p>A short poem written for you.</p>' },
+            12: { title: 'Scavenger', html: '<p>A clue for a small physical gift hidden at home: Look where we keep the <strong>mugs</strong>.</p>' },
+            13: { title: 'GIF', html: '<p><img src="https://media.giphy.com/media/3o7aCRpR1h2j9rVns8/giphy.gif" alt="gif" style="max-width:100%;border-radius:8px"></p>' },
+            14: { title: 'Letter', html: '<p>I wrote you a letter — open it and read slowly.</p>' },
+            15: { title: 'Dessert', html: '<p>Coupon: I will bake your favourite dessert this weekend.</p>' },
+            16: { title: 'Memory', html: '<p>Remember this? (add a small memory or photo)</p>' },
+            17: { title: 'Workout', html: '<p>Coupon: A short workout / walk together — my treat.</p>' },
+            18: { title: 'Custom', html: '<p>Customize a small digital gift: a drawing, a playlist, or a voice note.</p>' },
+            19: { title: 'Surprise call', html: '<p>I will call and sing you something silly. 😉</p>' },
+            20: { title: 'Gift card', html: '<p>Link to a small e-gift card or coupon (add URL)</p>' },
+            21: { title: 'Warm socket', html: '<p>One evening cuddles coupon — redeemable anytime.</p>' },
+            22: { title: 'Countdown', html: '<p>Only 2 days left! Here is a mini clue about the big gift.</p>' },
+            23: { title: 'Surprise eve', html: '<p>Tomorrow is the big present. Get excited!</p>' },
+            24: { title: 'Big surprise 🎁', html: '<p>Open me on Christmas morning — big love and a physical gift.</p>' }
+        };
+
+        // Utility: read query params
+        function getQueryParams() {
+            const q = {}; location.search.slice(1).split('&').forEach(s => { if (!s) return; const [k, v] = s.split('='); q[decodeURIComponent(k)] = v ? decodeURIComponent(v) : '' }); return q;
+        }
+
+        // Calculate which days are unlocked using local time (or a simulated date via ?simulate=YYYY-MM-DD)
+        function getToday(simulate) {
+            if (simulate) {
+                // parse YYYY-MM-DD
+                const parts = simulate.split('-').map(x => parseInt(x, 10));
+                if (parts.length === 3) return new Date(parts[0], parts[1] - 1, parts[2]);
+            }
+            return new Date();
+        }
+
+        function midnightNext(localDate) {
+            const d = new Date(localDate);
+            d.setDate(d.getDate() + 1);
+            d.setHours(0, 0, 0, 0);
+            return d;
+        }
+
+        // Render calendar
+        const grid = document.getElementById('calendarGrid');
+        const params = getQueryParams();
+        const simulate = params.simulate || null; // e.g. ?simulate=2024-12-05
+        const openAllMode = params.openAll === '1';
+
+        function render() {
+            grid.innerHTML = '';
+            const now = getToday(simulate);
+            const year = now.getFullYear();
+            // we assume December calendar — adjust if you want to change month
+            const firstDate = new Date(year, 11, 1); // Dec 1
+
+            for (let i = 1; i <= TOTAL_DAYS; i++) {
+                const slotDate = new Date(year, 11, i, 0, 0, 0, 0);
+                const unlocked = openAllMode || (now >= slotDate);
+                const seen = isSeen(i);
+
+                const el = document.createElement('article');
+                el.className = 'slot';
+                el.setAttribute('data-day', i);
+                el.setAttribute('tabindex', '0');
+
+                el.innerHTML = `
+          <div class="number">${i}</div>
+          <div class="label">${unlocked ? 'Open me' : 'Locked'}</div>
+          <div class="open-state">${seen ? 'Seen' : ''}</div>
+        `;
+
+                if (!unlocked) {
+                    const overlay = document.createElement('div'); overlay.className = 'locked-overlay';
+                    overlay.innerHTML = `<div class="padlock">🔒</div><div class="small">Opens on ${slotDate.toLocaleDateString()}</div>`;
+                    el.appendChild(overlay);
+                }
+
+                el.addEventListener('click', () => {
+                    if (unlocked) openDay(i);
+                    else flashLocked(el);
+                });
+                el.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); el.click(); } });
+
+                grid.appendChild(el);
+            }
+            updateNextTimer();
+        }
+
+        function flashLocked(el) {
+            el.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-6px)' }, { transform: 'translateY(0)' }], { duration: 300 });
+        }
+
+        // Modal
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSubtitle = document.getElementById('modalSubtitle');
+        const modalContent = document.getElementById('modalContent');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        function openDay(day) {
+            const data = SURPRISES[day] || { title: 'Surprise', html: '<p>Replace this with your content.</p>' };
+            modalTitle.textContent = `Day ${day} — ${data.title || ''}`;
+            modalSubtitle.textContent = `Opened on ${new Date().toLocaleString()}`;
+            modalContent.innerHTML = data.html || '';
+            modalBackdrop.style.display = 'flex';
+            markSeen(day);
+            // update open-state label
+            const el = grid.querySelector(`[data-day='${day}']`);
+            if (el) el.querySelector('.open-state').textContent = 'Seen';
+        }
+
+        function closeModal() {
+            modalBackdrop.style.display = 'none';
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modalBackdrop.addEventListener('click', function (e) { if (e.target === modalBackdrop) closeModal(); });
+
+        // localStorage for seen flags
+        const LS_KEY = 'xmas_calendar_seen_' + YEAR;
+        function getSeen() {
+            try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch (e) { return {} }
+        }
+        function markSeen(day) { const s = getSeen(); s[day] = true; localStorage.setItem(LS_KEY, JSON.stringify(s)); }
+        function isSeen(day) { const s = getSeen(); return !!s[day]; }
+        function resetSeen() { localStorage.removeItem(LS_KEY); render(); }
+
+        // openAll dev button
+        document.getElementById('openAllBtn').addEventListener('click', () => { location.search = '?openAll=1'; });
+        document.getElementById('resetBtn').addEventListener('click', () => { if (confirm('Reset seen flags?')) { resetSeen(); } });
+
+        // Next unlock countdown
+        const nextTimerEl = document.getElementById('nextTimer');
+        let countdownInterval = null;
+
+        function getNextUnlockDate(now) {
+            // if it's before Dec 1 of this year, next unlock is Dec 1
+            const year = now.getFullYear();
+            const dec1 = new Date(year, 11, 1, 0, 0, 0, 0);
+            if (now < dec1) return dec1;
+            // find next day between 1..TOTAL_DAYS that is strictly after now
+            for (let i = 1; i <= TOTAL_DAYS; i++) {
+                const d = new Date(year, 11, i, 0, 0, 0, 0);
+                if (d > now) return d;
+            }
+            return null; // all unlocked
+        }
+
+        function updateNextTimer() {
+            if (countdownInterval) clearInterval(countdownInterval);
+            const now = getToday(simulate);
+            if (openAllMode) { nextTimerEl.textContent = 'All unlocked (dev)'; return; }
+            const next = getNextUnlockDate(now);
+            if (!next) { nextTimerEl.textContent = 'All days unlocked'; return; }
+
+            function tick() {
+                const nowLocal = getToday(simulate);
+                const diff = Math.max(0, next - nowLocal);
+                if (diff <= 0) { render(); return; }
+                const s = Math.floor(diff / 1000) % 60; const m = Math.floor(diff / 60000) % 60; const h = Math.floor(diff / 3600000) % 24; const d = Math.floor(diff / 86400000);
+                const pieces = [];
+                if (d > 0) pieces.push(d + 'd');
+                pieces.push(String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'));
+                nextTimerEl.textContent = 'Next unlock in ' + pieces.join(' ');
+            }
+            tick();
+            countdownInterval = setInterval(tick, 1000);
+        }
+
+        // initial render
+        render();
+
+        // Autosync: when the real clock passes midnight, re-render
+        setInterval(() => {
+            // every minute check if new day arrived
+            render();
+        }, 60 * 1000);
+
+        // Expose a couple functions for quick hacks in console
+        window._calendar = { render, openDay, SURPRISES };
+
+    </script>
+</body>
+
+</html>
