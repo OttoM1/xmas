@@ -10,7 +10,7 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Joulukalenteri🎁</title>
+    <title>Marin Joulukalenteri</title>
     <style>
 
 @media screen and (min-width: 590px) {
@@ -19,6 +19,41 @@
         visibility: hidden !important;
         
     }
+}
+
+
+
+
+.slot:nth-child(22) {
+                box-shadow: 0 4px 16px rgb(202, 84, 51, .88);
+
+        border: 3px solid rgb(202, 84, 51);         
+filter: contrast(.9);
+
+    background: radial-gradient(circle at center, rgb(192, 79, 48), white, white) !important;
+
+}
+
+.slot:nth-child(23) {
+                box-shadow: 0 4px 16px  rgb(136, 123, 120, .88);
+
+            border: 3px solid rgb(136, 123, 120);         
+filter: contrast(.9);
+
+    background: radial-gradient(circle at center, rgb(155, 145, 145), white, white) !important;
+
+}
+
+
+
+
+.slot:nth-child(24) {
+                box-shadow: 0 4px 16px rgba(219, 189, 43, 0.837);
+
+            border: 3px solid var(--gold);         
+filter: contrast(.9);
+
+    background: radial-gradient(circle at center, var(--gold), white, white) !important;
 }
 
         :root {
@@ -52,9 +87,9 @@
             margin: 0;
             padding: 28px;
             overflow-x: hidden;
+            background: white;
             font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial;
             color: rgb(255, 255, 255);
-            background: rgb(255, 255, 255);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -133,13 +168,14 @@
             margin-top: 12svh;
         }
 
+
         .slot {
-          
-
-            background: linear-gradient(128deg, white 0%, white 10%, rgba(255, 0, 0, 0.2) 15%, white 20%, white 25%, rgba(255, 0, 0, 0.2)  30%, white 35%, white 40%, rgba(255, 0, 0, 0.2)  45%, white 50%, white 55%, rgba(255, 0, 0, 0.2)  60%, white 65%, white 70%, rgba(255, 0, 0, 0.2)  75%, white 80%, white 85%, rgba(255, 0, 0, 0.2)  90%, white 95%, white 100%);
-filter: contrast(0.9);
-
-border: 3px solid rgb(255, 33, 99);         
+           border: 3px solid rgb(255, 33, 99);         
+background-image: url(slot.jpg);
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+filter: saturate(1.1) contrast(1.06);
             border-radius: 14px;
             padding: 16px;
             position: relative;
@@ -152,7 +188,7 @@ border: 3px solid rgb(255, 33, 99);
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            box-shadow: 0 2px 16px rgb(5, 75, 25);
+            box-shadow: 0 4px 16px rgba(255, 17, 76, 0.837);
             transition: transform .18s ease, box-shadow .18s ease;
 
             
@@ -211,11 +247,16 @@ border: 3px solid rgb(255, 33, 99);
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: #ffffff;
+          background: white;
                         display: none;
             align-items: center;
             justify-content: center;
             padding: 24px
+        }
+
+        #modalSubtitle {
+            display: none;
+            visibility: hidden;
         }
 
 
@@ -259,9 +300,10 @@ border: 3px solid rgb(255, 33, 99);
 
         footer {
             max-width: 1024px;
-            padding-bottom: 4svh;
+            padding-bottom: 8svh;
             text-align: center;
-            color: var(--gold);
+            color: rgb(51, 50, 50);
+            text-shadow: 0 0 4px rgba(241, 214, 58, 0.796);
             font-size: 14px;
         }
 
@@ -277,6 +319,16 @@ border: 3px solid rgb(255, 33, 99);
         }
 
 
+
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 
@@ -286,13 +338,14 @@ border: 3px solid rgb(255, 33, 99);
 
     <header>
         <div>
+            <p id="subtitle" style="margin-bottom: 8px;">Marin</p>
+
             <h1>Joulukalenteri</h1>
-            <p id="subtitle">Mari</p>
         </div>
         
         <div class="controls">
            <div style="visibility: hidden;" id="nextTimer" class="small">Seuraava luukku : —</div> 
-            <button style="visibility: hidden;" id="openAllBtn" class="btn">Open all (dev)</button>
+            <button  style="visibility: hidden;" id="openAllBtn" class="btn">Open all (dev)</button>
             <button style="visibility: hidden;" id="resetBtn" class="btn">Reset seen</button>
         </div>
     
@@ -301,7 +354,9 @@ border: 3px solid rgb(255, 33, 99);
     <main>
         <section class="grid" id="calendarGrid" aria-live="polite" aria-label="Christmas calendar" >
             <!-- slots injected by JS -->
+
         </section>
+       
     </main>
 
     <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
@@ -315,8 +370,8 @@ border: 3px solid rgb(255, 33, 99);
         </div>
     </div>
 
-    <footer>
-        Kalenterin lahjat saat 24.12 jälkeen.
+    <footer >
+    Saat luukkujen fyysiset/yhteiset lahjat jouluaaton jälkeen
        </footer>
 
     <script>
@@ -500,8 +555,9 @@ border: 3px solid rgb(255, 33, 99);
 
         window._calendar = { render, openDay, SURPRISES };
 */
-   const TOTAL_DAYS = 24; // how many slots
-    const YEAR = (new Date()).getFullYear(); // target year for the calendar (you can override via simulate param)
+    const TOTAL_DAYS = 24; // how many slots
+
+const YEAR = (new Date()).getFullYear(); // target year for the calendar (you can override via simulate param)
 
     const SURPRISES = {
         1: { title: 'A note', html: '<strong>Love note:</strong><p>Today I thought about how lucky I am to have you.</p>' },
@@ -583,9 +639,10 @@ border: 3px solid rgb(255, 33, 99);
                     el.innerHTML = `
 <div class="number">${i}</div>
 
-<div class="open-state">${seen ? 'Avattu' : ''}</div>
 `;
 /*
+<div class="open-state">${seen ? 'Avattu' : ''}</div>
+
 <div class="label">${unlocked ? 'Open me' : 'Locked'}</div>
 
 */
@@ -605,7 +662,7 @@ border: 3px solid rgb(255, 33, 99);
 
                         const info = document.createElement('div'); info.className = 'small';
                         info.style.marginTop = '40px';
-                        info.textContent = 'Aukeaa';
+                        info.textContent = 'Aukeaa:';
 
                         overlay.appendChild(info);
                         overlay.appendChild(countdown);
@@ -636,13 +693,18 @@ border: 3px solid rgb(255, 33, 99);
 
                 function openDay(day) {
                     const data = SURPRISES[day] || { title: 'Surprise', html: '<p>Replace this with your content.</p>' };
+                  
+                    
                     modalTitle.textContent = `Day ${day} — ${data.title || ''}`;
                     modalSubtitle.textContent = `Avattu: ${new Date().toLocaleString()}`;
+
                     modalContent.innerHTML = data.html || '';
                     modalBackdrop.style.display = 'flex';
                     markSeen(day);
+                    
                     // update open-state label
                     const el = grid.querySelector(`[data-day='${day}']`);
+                    
                     if (el) el.querySelector('.open-state').textContent = 'Nähty';
                 }
 
@@ -737,8 +799,12 @@ border: 3px solid rgb(255, 33, 99);
                     // Expose a couple functions for quick hacks in console
                     window._calendar = { render, openDay, SURPRISES };
 
-</script>
 
+
+
+      
+    
+</script>
 
 
 
