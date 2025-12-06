@@ -357,7 +357,7 @@ filter: saturate(1.1) contrast(1.06);
         
         <div class="controls">
            <div style="visibility: hidden;" id="nextTimer" class="small">Seuraava luukku : —</div> 
-            <button style="visibility: hidden;"   id="openAllBtn" class="btn">Open all (dev)</button>
+            <button style="visibility: visible;"   id="openAllBtn" class="btn">Open all (dev)</button>
             <button style="visibility: hidden;" id="resetBtn" class="btn">Reset seen</button>
         </div>
     
@@ -572,18 +572,20 @@ filter: saturate(1.1) contrast(1.06);
 const YEAR = (new Date()).getFullYear(); // target year for the calendar (you can override via simulate param)
 
     const SURPRISES = {
-        1: { title: 'Ylläri', html: ' <p style="color: black;">Kinder Joulukalenteri<br><br><a style="color: black; text-decoration: none;" href="https://blog.turkishairlines.com/en/one-city-three-days-phuket/">?</a></p>' },
-        2: { title: 'Bängeri', html: '<p><a style="color: black;" href="https://open.spotify.com/track/3bidbhpOYeV4knp8AIu8Xn?si=ae6b93b8f9104b41">Open Spotify</a></p>' },
-        3: { title: 'Munch', html: '<p style="color: black;">pop CORN</p>' },
-        4: { title: 'Huhhuh', html: '<video src="marssi.mp4" poster="marssi.mp4" preload="auto" playsinline muted loop alt="mp4" style="width:280px; height:auto; border-radius:8px;margin-top:8px">' },
-        5: { title: 'Reissu', html: '<h2 style="color: black !important">Luukku venaa mun luona🖕😎</h2>' },
-        6: { title: 'Fail', html: '<h2 style="color: black;">Facial😏</h2>' },
-        7: { title: 'Video', html: '<p style="color: black !important">Tyhjä/p>' },
-        8: { title: 'Massage', html: '<p>Coupon: 30 min back massage — redeemable this week.</p>' },
-        9: { title: 'Game', html: '<p>A tiny JS mini-game lives here. (You can paste a link or embed)</p>' },
-        10: { title: 'Ticket', html: '<p>A surprise plan: Movie night — tickets for <em>you + me</em>.</p>' },
-        11: { title: 'Poem', html: '<p>A short poem written for you.</p>' },
-        12: { title: 'Scavenger', html: '<p><img src="ugg.jpg" alt="img" style="width:216px;border-radius:8px; margin-top: -40px;"></p>' },
+        1: { title: '1', html: ' <p style="color: black;">Kinder Joulukalenteri<br><br><a style="color: black; text-decoration: none;" href="https://blog.turkishairlines.com/en/one-city-three-days-phuket/">?</a></p>' },
+        2: { title: '2', html: '<p><a style="color: black;" href="https://open.spotify.com/track/3bidbhpOYeV4knp8AIu8Xn?si=ae6b93b8f9104b41">Open Spotify</a></p>' },
+        3: { title: '3', html: '<p style="color: black;">pop CORN</p>' },
+        4: { title: '4', html: '<video src="marssi.mp4" poster="marssi.mp4" preload="auto" playsinline muted loop alt="mp4" style="width:280px; height:auto; border-radius:8px;margin-top:8px">' },
+        5: { title: '5', html: '<h2 style="color: black !important">Luukku venaa mun luona🖕😎</h2>' },
+        6: { title: '6', html: '<h2 style="color: black;">Facial😏</h2>' },
+        7: { title: '7', html: '<p style="color: black !important">1x ilta, sä päätät kaiken ja mä JOUDUN tottelemaan</p>' },
+        8: { title: '8', html: '<h2 style="color: black;">hyvää MAANANATAITA, sun lempi päivä😎</h2>' },
+        9: { title: '9', html: '<p style="color: black !important">Sytytä tää vaan silloin kun et pysty varastamaan mun lämpöjä</p>' },
+        10: { title: '10', html: '<p style="color: black !important">kex</p>' },
+        11: { title: '11', html: '<p style="color: black !important">Sushi. Sä valitset paikan, lupaan syödä 69kpl, ennen ei poistuta</p>' },
+        
+        12: { title: '12', html: '<p style="color: black !important">Tee meille mätchäävät korut mut mun pitää olla hienompi🖕</p>' },
+        
         13: { title: 'GIF', html: '<p><img src="https://media.giphy.com/media/3o7aCRpR1h2j9rVns8/giphy.gif" alt="gif" style="max-width:100%;border-radius:8px"></p>' },
         14: { title: 'Letter', html: '<p>I wrote you a letter — open it and read slowly.</p>' },
         15: { title: 'Dessert', html: '<p>Coupon: I will bake your favourite dessert this weekend.</p>' },
